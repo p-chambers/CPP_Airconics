@@ -1,17 +1,19 @@
 /*
 * @Author: pchambers
 * @Date:   2016-08-17 11:35:50
-* @Last Modified by:   pchambers
-* @Last Modified time: 2016-08-18 17:42:09
+* @Last Modified by:   p-chambers
+* @Last Modified time: 2016-08-19 13:49:10
 */
 #include <iostream>
-#include <QApplication>
-#include <QTranslator>
-#include <QtWidgets>
+
+// The occqt headers
+#include "occQt.h"
+
+// The airconics headers
 #include "AirconicsFuselage.hpp"
 
 
-
+// OCE headers
 #include <BRep_Tool.hxx>
 
 #include <BRepAlgoAPI_Fuse.hxx>
@@ -67,8 +69,23 @@
 
 #include <TopTools_ListOfShape.hxx>
 
-#include <Aspect_Handle.hxx>
-#include <Aspect_DisplayConnection.hxx>
+// OCC display headers
+// #include <AIS_InteractiveContext.hxx>
+// #include <Aspect_Handle.hxx>
+// #include <Aspect_DisplayConnection.hxx>
+// #include <OpenGl_GraphicDriver.hxx>
+// #include <V3d_View.hxx>
+#include <AIS_Shape.hxx>
+
+
+// #ifdef WNT
+  // #include <WNT_Window.hxx>
+// #elif defined(__APPLE__) && !defined(MACOSX_USE_GLX)
+  // #include <Cocoa_Window.hxx>
+// #else
+#include <Xw_Window.hxx>
+// #endif
+
 
 TopoDS_Shape MakeBottle(const Standard_Real myWidth, const Standard_Real myHeight,
                         const Standard_Real myThickness)
@@ -195,33 +212,41 @@ int main(int argc, char *argv[]){
 
     QApplication a(argc, argv);
 
-    // create a Qt window
-    QWidget *window = new QWidget;
+    // // create a Qt window
+    // QWidget *window = new QWidget;
         
-    // th DisplayDonnection
-    Handle(Aspect_DisplayConnection) aDisplayConnection;
+    // // th DisplayDonnection
+    // Handle(Aspect_DisplayConnection) aDisplayConnection;
 
-    aDisplayConnection = new Aspect_DisplayConnection(qgetenv("DISPLAY").constData());
+    // aDisplayConnection = new Aspect_DisplayConnection(qgetenv("DISPLAY").constData());
     
-    // // the GraphicDriver
-    Handle(OpenGl_GraphicDriver) aGraphicDriver = new OpenGl_GraphicDriver(aDisplayConnection);
+    // // // the GraphicDriver
+    // Handle(OpenGl_GraphicDriver) aGraphicDriver = new OpenGl_GraphicDriver(aDisplayConnection);
     
-    // // creating the Viewer
-    Handle(V3d_Viewer) aViewer = new V3d_Viewer(aGraphicDriver, Standard_ExtString("my3dViewer"));
+    // // // creating the Viewer
+    // Handle(V3d_Viewer) aViewer = new V3d_Viewer(aGraphicDriver, Standard_ExtString("my3dViewer"));
     
-    // // creating a View
+    // // // creating a View
     // Handle(V3d_View) aView = aViewer->CreateView();
 
-    // // creating an Xw_Window (Ubuntu)
+    // // // creating an Xw_Window (Ubuntu)
     // Handle(Xw_Window) aWindow;
     // aWindow = new Xw_Window(aDisplayConnection, window->winId());
 
-    // // the Interactive context
+    // // // the Interactive context
     // Handle(AIS_InteractiveContext) aContext = new AIS_InteractiveContext(aViewer);
 
-    // aViewer->SetWindow(aWindow);
+    // aView->SetWindow(aWindow);
 
     // window->show();
+
+    // Handle(AIS_Shape) myAIS = new AIS_Shape(bottle);
+
+    occQt w;
+    w.show();
+
+    // aContext->Display(myAIS);
+
     return a.exec();
     // return 0;
 }

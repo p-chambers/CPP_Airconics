@@ -1,0 +1,3 @@
+[submodule "thirdparty/occQt"]
+	path = thirdparty/occQt
+	url = https://github.com/eryar/occQt.git
